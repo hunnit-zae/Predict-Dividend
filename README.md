@@ -7,7 +7,7 @@ To use the [Rapidminer](https://rapidminer.com/), Python and [KISVALUE](https://
 
 
 ## Project overview
-How much the company can pay out the dividend to the investors. That’s the one of the keys to decide the invest. So, we need to know what kind of financial statement effect to dividend is for wise invest decision making. Using the KOSPI, KOSDAQ listing company’s financial statement to find out what kind of statements are sufficient to predict the dividend. And make the model to test the statements what we chose is important factor in investment decisions.
+How much the company can pay out the dividend to the investors. That’s the one of the keys to decide the invest. So, we need to know what kind of financial statement effect to dividend is for wise invest decision making. Using the KOSPI, KOSDAQ listing company’s financial statement to find out which statements are significant to predict the dividend. And make the model to test the statements what we chose is important factor in investment decisions.
 
 ### 1. Program I use: Rapidminer, KISVALUE
 KISVALUE – The program provides the company’s financial data as CSV in the Korea stock market.
