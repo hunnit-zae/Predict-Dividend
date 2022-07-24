@@ -1,6 +1,5 @@
 # Predict-Dividend, 배당금 예측모델
 
-## Index
 To use the [Rapidminer](https://rapidminer.com/), Python and [KISVALUE](https://www.kisvalue.com/web/index.jsp) to make a predict model to which company will payout the dividend.
 
 
