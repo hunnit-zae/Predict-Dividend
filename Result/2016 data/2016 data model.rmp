@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.3.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_excel" compatibility="9.3.001" expanded="true" height="68" name="Read Excel 2016" width="90" x="45" y="34">
+        <parameter key="excel_file" value="C:\Users\Baek GeonJae\Desktop\금빅 데이터.xlsx"/>
+        <parameter key="sheet_selection" value="sheet number"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="ID.true.integer.id"/>
+          <parameter key="1" value="증감 여부.true.binominal.label"/>
+          <parameter key="2" value="매출채권회전율/194120.true.real.attribute"/>
+          <parameter key="3" value="재고자산회전율1/194080.true.real.attribute"/>
+          <parameter key="4" value="이익잉여금/118300.true.real.attribute"/>
+          <parameter key="5" value="베타/280223.true.real.attribute"/>
+          <parameter key="6" value="매출액증가율/091060.true.real.attribute"/>
+          <parameter key="7" value="부채비율/193060.true.real.attribute"/>
+          <parameter key="8" value="당기순이익/133000.true.real.attribute"/>
+          <parameter key="9" value="유동비율/193020.true.real.attribute"/>
+          <parameter key="10" value="매출액/121000.true.real.attribute"/>
+          <parameter key="11" value="자기자본증가율/191050.true.real.attribute"/>
+          <parameter key="12" value="매출액(종업원1인당)/195020.true.real.attribute"/>
+          <parameter key="13" value="1대주주명(지분)/0A2211.true.real.attribute"/>
+          <parameter key="14" value="종업원수/0A1060.true.integer.attribute"/>
+          <parameter key="15" value="기업규모/0A1070.true.integer.attribute"/>
+          <parameter key="16" value="KIS 신용평점/0A3010.true.integer.attribute"/>
+          <parameter key="17" value="기말시가총액합계(보통주+우선주)/0D1113.true.real.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+        <parameter key="datamanagement" value="double_array"/>
+        <parameter key="data_management" value="auto"/>
+      </operator>
+      <operator activated="true" class="split_data" compatibility="9.3.001" expanded="true" height="103" name="Split Data" width="90" x="112" y="187">
+        <enumeration key="partitions">
+          <parameter key="ratio" value="0.7"/>
+          <parameter key="ratio" value="0.3"/>
+        </enumeration>
+        <parameter key="sampling_type" value="automatic"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="h2o:logistic_regression" compatibility="9.3.001" expanded="true" height="124" name="Logistic Regression" width="90" x="313" y="34">
+        <parameter key="solver" value="AUTO"/>
+        <parameter key="reproducible" value="false"/>
+        <parameter key="maximum_number_of_threads" value="4"/>
+        <parameter key="use_regularization" value="false"/>
+        <parameter key="lambda_search" value="false"/>
+        <parameter key="number_of_lambdas" value="0"/>
+        <parameter key="lambda_min_ratio" value="0.0"/>
+        <parameter key="early_stopping" value="true"/>
+        <parameter key="stopping_rounds" value="3"/>
+        <parameter key="stopping_tolerance" value="0.001"/>
+        <parameter key="standardize" value="true"/>
+        <parameter key="non-negative_coefficients" value="false"/>
+        <parameter key="add_intercept" value="true"/>
+        <parameter key="compute_p-values" value="true"/>
+        <parameter key="remove_collinear_columns" value="true"/>
+        <parameter key="missing_values_handling" value="MeanImputation"/>
+        <parameter key="max_iterations" value="0"/>
+        <parameter key="max_runtime_seconds" value="0"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.3.001" expanded="true" height="82" name="Apply Model" width="90" x="514" y="187">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance_classification" compatibility="9.3.001" expanded="true" height="82" name="Performance" width="90" x="648" y="34">
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="accuracy" value="true"/>
+        <parameter key="classification_error" value="false"/>
+        <parameter key="kappa" value="false"/>
+        <parameter key="weighted_mean_recall" value="false"/>
+        <parameter key="weighted_mean_precision" value="false"/>
+        <parameter key="spearman_rho" value="false"/>
+        <parameter key="kendall_tau" value="false"/>
+        <parameter key="absolute_error" value="false"/>
+        <parameter key="relative_error" value="false"/>
+        <parameter key="relative_error_lenient" value="false"/>
+        <parameter key="relative_error_strict" value="false"/>
+        <parameter key="normalized_absolute_error" value="false"/>
+        <parameter key="root_mean_squared_error" value="false"/>
+        <parameter key="root_relative_squared_error" value="false"/>
+        <parameter key="squared_error" value="false"/>
+        <parameter key="correlation" value="false"/>
+        <parameter key="squared_correlation" value="false"/>
+        <parameter key="cross-entropy" value="false"/>
+        <parameter key="margin" value="false"/>
+        <parameter key="soft_margin_loss" value="false"/>
+        <parameter key="logistic_loss" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+        <list key="class_weights"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.3.001" expanded="true" height="103" name="Decision Tree" width="90" x="313" y="289">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="neural_net" compatibility="9.3.001" expanded="true" height="82" name="Neural Net" width="90" x="313" y="442">
+        <list key="hidden_layers"/>
+        <parameter key="training_cycles" value="200"/>
+        <parameter key="learning_rate" value="0.01"/>
+        <parameter key="momentum" value="0.9"/>
+        <parameter key="decay" value="false"/>
+        <parameter key="shuffle" value="true"/>
+        <parameter key="normalize" value="true"/>
+        <parameter key="error_epsilon" value="1.0E-4"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <connect from_op="Read Excel 2016" from_port="output" to_op="Split Data" to_port="example set"/>
+      <connect from_op="Split Data" from_port="partition 1" to_op="Logistic Regression" to_port="training set"/>
+      <connect from_op="Split Data" from_port="partition 2" to_op="Apply Model" to_port="unlabelled data"/>
+      <connect from_op="Logistic Regression" from_port="model" to_op="Apply Model" to_port="model"/>
+      <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+      <connect from_op="Apply Model" from_port="model" to_port="result 3"/>
+      <connect from_op="Performance" from_port="performance" to_port="result 1"/>
+      <connect from_op="Performance" from_port="example set" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>
